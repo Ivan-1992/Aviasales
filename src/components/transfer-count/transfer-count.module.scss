@@ -1,0 +1,26 @@
+$white: #FFF;
+$blue: #F3F7FA;
+
+form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: $white;
+    height: 252px;
+    border-radius: 10px;
+    label, input {
+        cursor: pointer;
+        padding: 10px;
+        padding-left: 15px;
+        font-size: 16px;
+        &:hover {
+            background-color: $blue;
+        }
+    }
+    
+    div {
+        margin-top: 15px;
+        margin-left: 20px;
+        font-size: 15px;
+    }
+}

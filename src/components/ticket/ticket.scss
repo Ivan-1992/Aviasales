@@ -1,0 +1,30 @@
+$fontColor: #2196F3;
+$white: #FFF;
+$greyFont: #A0B0B9;
+
+.ticket {
+    display: grid;
+    grid-template-columns: 140px 140px 140px;
+    grid-template-rows: 46px 49px 49px;
+    grid-column-gap: 20px;
+    background-color: $white;
+    margin-top: 20px;
+    padding: 20px;
+    width: 475px;
+    cursor: pointer;
+    &__price {
+        font-size: 24px;
+        color: $fontColor;
+    }
+    &__company-logo {
+        grid-column-start: 3;
+        justify-self: end;
+    }
+    &__airport, &__on-way, &__transfer-count {
+        margin-top: 10px;
+    }
+    &__airport_reduction, &__on-way_way, &__transfer-count_count {
+        color: $greyFont;
+        margin-bottom: 5px;
+    }
+}

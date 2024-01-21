@@ -1,0 +1,23 @@
+@font-face {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 400;    
+    src: local("Open Sans"),         
+         url(../Fonts/OpenSans-Regular.ttf) format("ttf");
+  }
+  
+  @font-face {
+    font-family: "Open Sans";
+    font-style: medium;
+    font-weight: 500;    
+    src: local("Open Sans"),         
+         url(../Fonts/OpenSans-Medium.ttf) format("ttf");         
+  }
+
+  @font-face {
+    font-family: "Open Sans";
+    font-style: bold;
+    font-weight: 700;    
+    src: local("Open Sans"),
+         url(../Fonts/OpenSans-Bold.ttf) format("ttf");         
+  }
