@@ -1,7 +1,7 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
 
-import icon from './S7 Logo.png'
+import icon from '../../assets/S7 Logo.png'
 import './ticket.scss'
 
 const Ticket = () => {

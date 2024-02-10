@@ -6,15 +6,29 @@ $greyFont: #A0B0B9;
     display: grid;
     grid-template-columns: 140px 140px 140px;
     grid-template-rows: 46px 49px 49px;
-    grid-column-gap: 20px;
+    grid-column-gap: 18px;
     background-color: $white;
     margin-top: 20px;
     padding: 20px;
-    width: 475px;
+    width: 457px;
+    border-radius: 10px;
     cursor: pointer;
+    box-shadow: 0px 2px 8px 0px #0000001A;
+    @media (max-width: 768px) {
+        width: 100%;
+        box-sizing: border-box;
+        grid-template-columns: auto auto auto;
+
+    }
     &__price {
         font-size: 24px;
         color: $fontColor;
+        @media (min-width: 405px) and (max-width: 450px) {
+            font-size: 20px;
+        }
+        @media (max-width: 404px) {
+            font-size: 17px;
+        }
     }
     &__company-logo {
         grid-column-start: 3;
@@ -26,5 +40,18 @@ $greyFont: #A0B0B9;
     &__airport_reduction, &__on-way_way, &__transfer-count_count {
         color: $greyFont;
         margin-bottom: 5px;
+        font-size: 12px;
+        line-height: 18px;
+        letter-spacing: 0.5px;
+        @media (max-width: 404px) {
+            font-size: 10px;
+        }
+    }
+    &__airport_time, &__on-way_time, &__transfer-count_airport {
+        font-size: 14px;
+        line-height: 21px;
+        @media (max-width: 404px) {
+            font-size: 12px;
+        }
     }
 }

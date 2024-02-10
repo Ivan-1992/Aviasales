@@ -2,10 +2,9 @@ import React from 'react'
 
 import PriceFilter from '../price-filter'
 import TicketList from '../ticket-list'
-import TransferCount from '../transfer-count'
 import MoreButton from '../more-button/more-button'
-
-import icon from './Logo.png'
+import TransferCount from '../transfer-count'
+import icon from '../../assets/Logo.png'
 import './app.scss'
 
 const App = () => {

@@ -1,0 +1,77 @@
+$white: #FFF;
+$blue: #2196F3;
+$black: #4A4A4A;
+$borderColor: #DFE5EC;
+
+.price-filter {
+    border-radius: 15px;
+    max-width: 502px;
+    &__button {
+        width: 166px;
+        height: 50px;
+        border: none;
+        background-color: $white;
+        color: $black;
+        cursor: pointer;
+        font-size: 12px;
+        line-height: 20px;
+        letter-spacing: 0.5px;
+        &:focus {
+            color: $white;
+            background-color: $blue;
+            width: 166px;
+            height: 50px;
+            border: none;
+            outline: none;
+            @media (max-width: 768px) {
+                width: auto;
+            }
+        }
+    }
+    @media (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.left {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border: 1px solid $borderColor;
+    @media (max-width: 768px) {
+        width: auto;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 10px;
+    }
+}
+
+.middle {
+    border-top: 1px solid $borderColor;
+    border-bottom: 1px solid $borderColor;
+    @media (max-width: 768px) {
+        width: auto;
+        border-bottom: none;
+        border-top: none;
+        border-right: 1px solid $borderColor;
+        border-left: 1px solid $borderColor;
+    }
+}
+
+.right {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: 1px solid #DFE5EC;
+    @media (max-width: 768px) {
+        width: auto;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 10px;
+    }
+}
+
+.active {
+    color: $white;
+    background-color: $blue;
+    width: 172px;
+    height: 50px;
+    border: none;
+}

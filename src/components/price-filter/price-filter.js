@@ -1,23 +1,22 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
-import { Radio } from 'antd'
+import { connect } from 'react-redux'
 
-import './price-filter.module.scss'
+import * as actions from '../../store/actions'
+import './price-filter.scss'
 
-const PriceFilter = () => {
-  const buttonStyle = { color: 'white', backgroundColor: '#2196F3' }
+const PriceFilter = ({ cheap, fast, optimal }) => {
   return (
     <div className="price-filter">
-      <Radio.Group defaultValue="a" size="large">
-        <Radio.Button value="a" style={buttonStyle}>
-          САМЫЙ ДЕШЕВЫЙ
-        </Radio.Button>
-        <Radio.Button value="b">САМЫЙ БЫСТРЫЙ</Radio.Button>
-        <Radio.Button value="c">ОПТИМАЛЬНЫЙ</Radio.Button>
-      </Radio.Group>
-      {/* <button className="price-filter__button">САМЫЙ ДЕШЕВЫЙ</button>
-      <button className="price-filter__button">САМЫЙ БЫСТРЫЙ</button>
-      <button className="price-filter__button">ОПТИМАЛЬНЫЙ</button> */}
+      <button className="price-filter__button left" onClick={cheap} autoFocus={true}>
+        САМЫЙ ДЕШЕВЫЙ
+      </button>
+      <button className="price-filter__button middle" onClick={fast}>
+        САМЫЙ БЫСТРЫЙ
+      </button>
+      <button className="price-filter__button right" onClick={optimal}>
+        ОПТИМАЛЬНЫЙ
+      </button>
     </div>
   )
 }
@@ -25,4 +24,10 @@ const PriceFilter = () => {
 // PriceFilter.defaultProps={}
 // PriceFilter.propTypes={}
 
-export default PriceFilter
+const mapStateToProps = (state) => {
+  return {
+    price: state.price,
+  }
+}
+
+export default connect(mapStateToProps, actions)(PriceFilter)
