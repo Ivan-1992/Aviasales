@@ -2,7 +2,7 @@ import React from 'react'
 // import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import * as actions from '../../store/actions'
+import * as actions from '../../store/actions/price-actions'
 import './price-filter.scss'
 
 const PriceFilter = ({ cheap, fast, optimal }) => {

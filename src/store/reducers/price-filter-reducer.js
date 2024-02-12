@@ -1,4 +1,4 @@
-import { CHEAP, FAST, OPTIMAL } from './types'
+import { CHEAP, FAST, OPTIMAL } from '../types'
 
 const initialState = { filter: 'cheap' }
 
