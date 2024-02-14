@@ -27,7 +27,7 @@ const TicketList = () => {
 
   const transferSort = (tickets) => {
     const checkedTransfers = transfer.filter((tr) => tr.checked)
-    if (checkedTransfers.length === 0) return tickets
+    if (checkedTransfers.length === 4) return tickets
     return tickets.filter((ticket) => {
       const stops = ticket.segments[0].stops.length
       return checkedTransfers.some((tr) => {
@@ -54,6 +54,9 @@ const TicketList = () => {
     </div>
   ) : null
 
+  const noData =
+    !load && sortingTickets.length === 0 ? <div>Рейсов, подходящих под заданные фильтры, не найдено</div> : null
+
   if (error) {
     return
   }
@@ -61,6 +64,7 @@ const TicketList = () => {
   return (
     <>
       {load}
+      {noData}
       {sortingTickets.length > 0 && (
         <ul className={styles.ticket_list}>
           {sortingTickets.slice(0, visibleTickets).map((ticket, index) => (
@@ -71,7 +75,7 @@ const TicketList = () => {
         </ul>
       )}
 
-      {tickets && visibleTickets < tickets.length && (
+      {!noData && tickets && visibleTickets < tickets.length && (
         <button className={styles.more_button} onClick={showMoreTickets}>
           ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!
         </button>
