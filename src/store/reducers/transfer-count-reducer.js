@@ -1,6 +1,6 @@
 const initialState = {
   filters: [
-    { name: 'filter1', label: 'Без пересадок', checked: false },
+    { name: 'filter1', label: 'Без пересадок', checked: true },
     { name: 'filter2', label: '1 пересадка', checked: false },
     { name: 'filter3', label: '2 пересадки', checked: false },
     { name: 'filter4', label: '3 пересадки', checked: false },

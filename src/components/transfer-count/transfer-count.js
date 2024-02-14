@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import * as actions from '../../store/actions/transfer-actions'
 
@@ -44,6 +45,12 @@ const TransferCount = ({ filters, setAllFilters, setFilter }) => {
       ))}
     </form>
   )
+}
+
+TransferCount.propTypes = {
+  filters: PropTypes.array.isRequired,
+  setAllFilters: PropTypes.func.isRequired,
+  setFilter: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

@@ -4,19 +4,20 @@ import PriceFilter from '../price-filter'
 import TicketList from '../ticket-list'
 import TransferCount from '../transfer-count'
 import icon from '../../assets/Logo.png'
-import './app.scss'
+
+import style from './app.module.scss'
 
 const App = () => {
   return (
-    <div className="general">
-      <img src={icon} alt="airplane" className="general__airplane" />
-      <div className="general__transfer-count">
+    <div className={style.general}>
+      <img src={icon} alt="airplane" className={style.general__airplane} />
+      <div className={style.general__transfer_count}>
         <TransferCount />
       </div>
-      <div className="general__price-filter">
+      <div className={style.general__price_filter}>
         <PriceFilter />
       </div>
-      <div className="general__ticket-list">
+      <div className={style.general__ticket_list}>
         <TicketList />
       </div>
     </div>

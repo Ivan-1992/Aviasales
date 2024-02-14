@@ -15,10 +15,13 @@ $blue: #2196F3;
     margin-top: 20px;
     cursor: pointer;
     @media (max-width: 768px) {
-        padding-left: 20vw;
-        padding-right: 20vw;
+        width: 100%;
     }
     @media (min-width: 769px) {
         width: 502px;
     }
+}
+
+.spinner {
+    margin-left: 140px;
 }

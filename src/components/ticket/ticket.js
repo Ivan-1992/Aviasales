@@ -1,7 +1,7 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
-import './ticket.scss'
+import styles from './ticket.module.scss'
 
 const Ticket = ({ ticket }) => {
   const { price, carrier } = ticket
@@ -64,51 +64,64 @@ const Ticket = ({ ticket }) => {
   }
 
   return (
-    <div className="ticket">
-      <span className="ticket__price">{price} Р</span>
-      <img src={`https://pics.avs.io/99/36/${carrier}.png`} alt="air company" className="ticket__company-logo" />
-      <div className="ticket__airport">
-        <div className="ticket__airport_reduction">
+    <div className={styles.ticket}>
+      <span className={styles.ticket__price}>{price} Р</span>
+      <img src={`https://pics.avs.io/99/36/${carrier}.png`} alt="air company" className={styles.ticket__company_logo} />
+      <div className={styles.ticket__airport}>
+        <div className={styles.ticket__airport_reduction}>
           {originTo} - {destinationTo}
         </div>
-        <div className="ticket__airport_time">
+        <div className={styles.ticket__airport_time}>
           {tt} - {tt2}
         </div>
       </div>
-      <div className="ticket__on-way">
-        <div className="ticket__on-way_way">В ПУТИ</div>
-        <div className="ticket__on-way_time">
+      <div className={styles.ticket__on_way}>
+        <div className={styles.ticket__on_way_way}>В ПУТИ</div>
+        <div className={styles.ticket__on_way_time}>
           {durationToHour}ч {durationToMinutes}м
         </div>
       </div>
-      <div className="ticket__transfer-count">
-        <div className="ticket__transfer-count_count">{stopsEdit(stopsTo)}</div>
-        <div className="ticket__transfer-count_airport">{stopsTo.join(', ')}</div>
+      <div className={styles.ticket__transfer_count}>
+        <div className={styles.ticket__transfer_count_count}>{stopsEdit(stopsTo)}</div>
+        <div className={styles.ticket__transfer_count_airport}>{stopsTo.join(', ')}</div>
       </div>
 
-      <div className="ticket__airport">
-        <div className="ticket__airport_reduction">
+      <div className={styles.ticket__airport}>
+        <div className={styles.ticket__airport_reduction}>
           {originBack} - {destinationBack}
         </div>
-        <div className="ticket__airport_time">
+        <div className={styles.ticket__airport_time}>
           {tb} - {tb2}
         </div>
       </div>
-      <div className="ticket__on-way">
-        <div className="ticket__on-way_way">В ПУТИ</div>
-        <div className="ticket__on-way_time">
+      <div className={styles.ticket__on_way}>
+        <div className={styles.ticket__on_way_way}>В ПУТИ</div>
+        <div className={styles.ticket__on_way_time}>
           {durationBackHour}ч {durationBackMinutes}м
         </div>
       </div>
-      <div className="ticket__transfer-count">
-        <div className="ticket__transfer-count_count">{stopsEditBack(stopsBack)}</div>
-        <div className="ticket__transfer-count_airport">{stopsBack.join(', ')}</div>
+      <div className={styles.ticket__transfer_count}>
+        <div className={styles.ticket__transfer_count_count}>{stopsEditBack(stopsBack)}</div>
+        <div className={styles.ticket__transfer_count_airport}>{stopsBack.join(', ')}</div>
       </div>
     </div>
   )
 }
 
-// Ticket.defaultProps = {}
-// Ticket.propTypes = {}
+Ticket.propTypes = {
+  ticket: PropTypes.shape({
+    price: PropTypes.number.isRequired,
+    carrier: PropTypes.string.isRequired,
+    segments: PropTypes.arrayOf(
+      PropTypes.shape({
+        origin: PropTypes.string.isRequired,
+        destination: PropTypes.string.isRequired,
+        duration: PropTypes.number.isRequired,
+        stops: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+        date: PropTypes.string.isRequired,
+      }).isRequired
+    ).isRequired,
+  }).isRequired,
+}
 
 export default Ticket

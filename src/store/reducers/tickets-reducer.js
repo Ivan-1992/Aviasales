@@ -1,9 +1,10 @@
-import { FETCH_TICKETS_REQUEST, FETCH_TICKETS_SUCCESS, FETCH_TICKETS_FAILURE } from '../types'
+import { FETCH_TICKETS_REQUEST, FETCH_TICKETS_SUCCESS, FETCH_TICKETS_FAILURE, FETCH_TICKETS_CONTINUE } from '../types'
 
 const initialState = {
   tickets: [],
   loading: false,
   error: null,
+  stop: false,
 }
 
 const ticketsReducer = (state = initialState, action) => {
@@ -18,7 +19,13 @@ const ticketsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        tickets: action.tickets,
+        stop: true,
+      }
+    case FETCH_TICKETS_CONTINUE:
+      return {
+        ...state,
+        loading: true,
+        tickets: state.tickets.concat(action.tickets.tickets),
       }
     case FETCH_TICKETS_FAILURE:
       return {

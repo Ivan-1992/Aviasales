@@ -30,14 +30,14 @@ $greyFont: #A0B0B9;
             font-size: 17px;
         }
     }
-    &__company-logo {
+    &__company_logo {
         grid-column-start: 3;
         justify-self: end;
     }
-    &__airport, &__on-way, &__transfer-count {
+    &__airport, &__on_way, &__transfer_count {
         margin-top: 10px;
     }
-    &__airport_reduction, &__on-way_way, &__transfer-count_count {
+    &__airport_reduction, &__on_way_way, &__transfer_count_count {
         color: $greyFont;
         margin-bottom: 5px;
         font-size: 12px;
@@ -47,7 +47,7 @@ $greyFont: #A0B0B9;
             font-size: 10px;
         }
     }
-    &__airport_time, &__on-way_time, &__transfer-count_airport {
+    &__airport_time, &__on_way_time, &__transfer_count_airport {
         font-size: 14px;
         line-height: 21px;
         @media (max-width: 404px) {
