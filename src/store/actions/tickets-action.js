@@ -4,8 +4,9 @@ export const fetchTicketsRequest = () => ({
   type: FETCH_TICKETS_REQUEST,
 })
 
-export const fetchTicketsSuccess = () => ({
+export const fetchTicketsSuccess = (tickets) => ({
   type: FETCH_TICKETS_SUCCESS,
+  tickets,
 })
 
 export const fetchTicketsFailure = (error) => ({
@@ -19,32 +20,35 @@ export const fetchTicketsContinue = (tickets) => ({
 })
 
 export const fetchTickets = () => {
+  const baseUrl = 'https://aviasales-test-api.kata.academy/'
   let stopSignalReceived = false
 
   return async (dispatch) => {
     dispatch(fetchTicketsRequest())
-    try {
-      const searchIdResponse = await fetch('https://aviasales-test-api.kata.academy/search')
-      const searchIdData = await searchIdResponse.json()
-      const searchId = searchIdData.searchId
+    const searchIdResponse = await fetch(`${baseUrl}search`)
+    const searchIdData = await searchIdResponse.json()
+    const searchId = searchIdData.searchId
 
-      while (!stopSignalReceived) {
-        try {
-          const ticketsResponse = await fetch(`https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`)
-          const ticketsData = await ticketsResponse.json()
+    while (!stopSignalReceived) {
+      let status
+      try {
+        const ticketsResponse = await fetch(`${baseUrl}tickets?searchId=${searchId}`)
+        status = ticketsResponse.status
+        const ticketsData = await ticketsResponse.json()
 
-          if (ticketsData.stop) {
-            stopSignalReceived = true
-            dispatch(fetchTicketsSuccess(ticketsData))
-          } else {
-            dispatch(fetchTicketsContinue(ticketsData))
-          }
-        } catch (error) {
-          console.error('Error fetching tickets:', error)
+        if (ticketsData.stop) {
+          stopSignalReceived = true
+          dispatch(fetchTicketsSuccess(ticketsData))
+        } else {
+          dispatch(fetchTicketsContinue(ticketsData))
+        }
+      } catch (error) {
+        if (status >= 500) {
+          continue
+        } else {
+          dispatch(fetchTicketsFailure(error))
         }
       }
-    } catch (error) {
-      dispatch(fetchTicketsFailure(error))
     }
   }
 }

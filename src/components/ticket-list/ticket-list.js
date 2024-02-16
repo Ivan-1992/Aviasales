@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Ticket from '../ticket'
 import Spinner from '../spinner'
 import { fetchTickets } from '../../store/actions/tickets-action'
+import priceSort from '../../utilities/price-sort'
+import transferSort from '../../utilities/transfer-sort'
 
 import styles from './ticket-list.module.scss'
 
@@ -25,28 +27,8 @@ const TicketList = () => {
     setVisibleTickets((visibleTickets) => visibleTickets + 5)
   }
 
-  const transferSort = (tickets) => {
-    const checkedTransfers = transfer.filter((tr) => tr.checked)
-    if (checkedTransfers.length === 4) return tickets
-    return tickets.filter((ticket) => {
-      const stops = ticket.segments[0].stops.length
-      return checkedTransfers.some((tr) => {
-        if (tr.name === 'filter1' && stops === 0) return true
-        if (tr.name === 'filter2' && stops === 1) return true
-        if (tr.name === 'filter3' && stops === 2) return true
-        if (tr.name === 'filter4' && stops === 3) return true
-        return false
-      })
-    })
-  }
-
-  const priceSort = (tickets) => {
-    if (price === 'cheap') return [...tickets].sort((a, b) => a.price - b.price)
-    if (price === 'fast') return [...tickets].sort((a, b) => a.segments[0].duration - b.segments[0].duration)
-    if (price === 'optimal') return [...tickets].sort((a, b) => a.segments[1].duration - b.segments[1].duration)
-  }
-
-  const sortingTickets = tickets ? transferSort(priceSort(tickets)) : []
+  const sortedTickets = useMemo(() => priceSort(tickets, price), [tickets, price])
+  const filteredTickets = useMemo(() => transferSort(sortedTickets, transfer), [sortedTickets, transfer])
 
   const load = loading ? (
     <div className={styles.spinner}>
@@ -54,21 +36,22 @@ const TicketList = () => {
     </div>
   ) : null
 
-  const noData =
-    !load && sortingTickets.length === 0 ? <div>Рейсов, подходящих под заданные фильтры, не найдено</div> : null
+  const errs = error ? <div>{`Ошибка: ${error}`}</div> : null
 
-  if (error) {
-    return
-  }
+  const noData =
+    !errs && !load && filteredTickets.length === 0 ? (
+      <div>Рейсов, подходящих под заданные фильтры, не найдено</div>
+    ) : null
 
   return (
     <>
+      {errs}
       {load}
       {noData}
-      {sortingTickets.length > 0 && (
+      {filteredTickets.length > 0 && (
         <ul className={styles.ticket_list}>
-          {sortingTickets.slice(0, visibleTickets).map((ticket, index) => (
-            <li key={index}>
+          {filteredTickets.slice(0, visibleTickets).map((ticket) => (
+            <li key={ticket.price + ticket.carrier + ticket.segments[0].duration + ticket.segments[1].stops[0]}>
               <Ticket ticket={ticket} />
             </li>
           ))}

@@ -1,23 +1,25 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import { useDispatch, useSelector } from 'react-redux'
 
-import * as actions from '../../store/actions/transfer-actions'
+import { setAllFilters, setFilter } from '../../store/actions/transfer-actions'
 
 import styles from './transfer-count.module.scss'
 
-const TransferCount = ({ filters, setAllFilters, setFilter }) => {
+const TransferCount = () => {
+  const dispatch = useDispatch()
+  const filters = useSelector((state) => state.transfer.filters)
+
   const handleCheckboxChange = (e) => {
     const { name, checked } = e.target
 
     if (name === 'all') {
       if (checked) {
-        setAllFilters(true)
+        dispatch(setAllFilters(true))
       } else {
-        setAllFilters(false)
+        dispatch(setAllFilters(false))
       }
     } else {
-      setFilter(name, checked)
+      dispatch(setFilter(name, checked))
     }
   }
 
@@ -47,14 +49,4 @@ const TransferCount = ({ filters, setAllFilters, setFilter }) => {
   )
 }
 
-TransferCount.propTypes = {
-  filters: PropTypes.array.isRequired,
-  setAllFilters: PropTypes.func.isRequired,
-  setFilter: PropTypes.func.isRequired,
-}
-
-const mapStateToProps = (state) => ({
-  filters: state.transfer.filters,
-})
-
-export default connect(mapStateToProps, actions)(TransferCount)
+export default TransferCount

@@ -1,25 +1,25 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
-import * as actions from '../../store/actions/price-actions'
+import { cheap, fast, optimal } from '../../store/actions/price-actions'
 
 import styles from './price-filter.module.scss'
 
-const PriceFilter = ({ cheap, fast, optimal }) => {
+const PriceFilter = () => {
   const [activeButton, setActiveButton] = useState('cheap')
+  const dispatch = useDispatch()
 
   const handleButtonClick = (filter) => {
     setActiveButton(filter)
     switch (filter) {
       case 'cheap':
-        cheap()
+        dispatch(cheap())
         break
       case 'fast':
-        fast()
+        dispatch(fast())
         break
       case 'optimal':
-        optimal()
+        dispatch(optimal())
         break
       default:
         break
@@ -51,16 +51,4 @@ const PriceFilter = ({ cheap, fast, optimal }) => {
   )
 }
 
-PriceFilter.propTypes = {
-  cheap: PropTypes.func.isRequired,
-  fast: PropTypes.func.isRequired,
-  optimal: PropTypes.func.isRequired,
-}
-
-const mapStateToProps = (state) => {
-  return {
-    price: state.price,
-  }
-}
-
-export default connect(mapStateToProps, actions)(PriceFilter)
+export default PriceFilter
