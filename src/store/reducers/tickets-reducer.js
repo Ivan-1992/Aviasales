@@ -4,7 +4,6 @@ const initialState = {
   tickets: [],
   loading: false,
   error: null,
-  stop: false,
 }
 
 const ticketsReducer = (state = initialState, action) => {
@@ -19,7 +18,6 @@ const ticketsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        stop: true,
       }
     case FETCH_TICKETS_CONTINUE:
       return {

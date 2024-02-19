@@ -7,6 +7,7 @@ import Spinner from '../spinner'
 import { fetchTickets } from '../../store/actions/tickets-action'
 import priceSort from '../../utilities/price-sort'
 import transferSort from '../../utilities/transfer-sort'
+import ErrorIndicator from '../error-indicator'
 
 import styles from './ticket-list.module.scss'
 
@@ -36,7 +37,7 @@ const TicketList = () => {
     </div>
   ) : null
 
-  const errs = error ? <div>{`Ошибка: ${error}`}</div> : null
+  const errs = error ? <ErrorIndicator error={error} /> : null
 
   const noData =
     !errs && !load && filteredTickets.length === 0 ? (

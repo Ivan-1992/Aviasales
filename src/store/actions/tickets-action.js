@@ -25,28 +25,33 @@ export const fetchTickets = () => {
 
   return async (dispatch) => {
     dispatch(fetchTicketsRequest())
+    let searchId
+
     const searchIdResponse = await fetch(`${baseUrl}search`)
-    const searchIdData = await searchIdResponse.json()
-    const searchId = searchIdData.searchId
+    const searchIdData = await searchIdResponse.json().catch((error) => dispatch(fetchTicketsFailure(error)))
+    searchId = searchIdData.searchId
 
-    while (!stopSignalReceived) {
-      let status
-      try {
-        const ticketsResponse = await fetch(`${baseUrl}tickets?searchId=${searchId}`)
-        status = ticketsResponse.status
-        const ticketsData = await ticketsResponse.json()
+    if (searchId) {
+      while (!stopSignalReceived) {
+        let status
+        try {
+          const ticketsResponse = await fetch(`${baseUrl}tickets?searchId=${searchId}`)
+          status = ticketsResponse.status
+          const ticketsData = await ticketsResponse.json()
 
-        if (ticketsData.stop) {
-          stopSignalReceived = true
-          dispatch(fetchTicketsSuccess(ticketsData))
-        } else {
-          dispatch(fetchTicketsContinue(ticketsData))
-        }
-      } catch (error) {
-        if (status >= 500) {
-          continue
-        } else {
-          dispatch(fetchTicketsFailure(error))
+          if (ticketsData.stop) {
+            stopSignalReceived = true
+            dispatch(fetchTicketsSuccess(ticketsData))
+          } else {
+            dispatch(fetchTicketsContinue(ticketsData))
+          }
+        } catch (error) {
+          if (status >= 500) {
+            continue
+          } else {
+            dispatch(fetchTicketsFailure(error))
+            break
+          }
         }
       }
     }
