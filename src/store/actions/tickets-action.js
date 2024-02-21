@@ -26,10 +26,16 @@ export const fetchTickets = () => {
   return async (dispatch) => {
     dispatch(fetchTicketsRequest())
     let searchId
-
-    const searchIdResponse = await fetch(`${baseUrl}search`)
-    const searchIdData = await searchIdResponse.json().catch((error) => dispatch(fetchTicketsFailure(error)))
-    searchId = searchIdData.searchId
+    try {
+      const searchIdResponse = await fetch(`${baseUrl}search`)
+      if (!searchIdResponse.ok) {
+        throw new Error('Не удалось получить id')
+      }
+      const searchIdData = await searchIdResponse.json()
+      searchId = searchIdData.searchId
+    } catch (error) {
+      dispatch(fetchTicketsFailure(error))
+    }
 
     if (searchId) {
       while (!stopSignalReceived) {
@@ -37,6 +43,11 @@ export const fetchTickets = () => {
         try {
           const ticketsResponse = await fetch(`${baseUrl}tickets?searchId=${searchId}`)
           status = ticketsResponse.status
+
+          if (!ticketsResponse.ok && status < 500) {
+            throw new Error('Не удалось получить билеты')
+          }
+
           const ticketsData = await ticketsResponse.json()
 
           if (ticketsData.stop) {
